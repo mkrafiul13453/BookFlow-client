@@ -8,8 +8,12 @@ import {
   FaXTwitter,
   FaLinkedinIn,
 } from "react-icons/fa6";
+import { authClient } from "@/lib/auth-client";
 
 export default function Footer() {
+  const { data: session } = authClient.useSession();
+  const user = session?.user;
+  console.log(user);
   return (
     <footer className="mt-16 border-t bg-background">
       <div className="container mx-auto px-4">

@@ -6,6 +6,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ThemeProvider from "@/components/ThemeProvider";
+import { ToastContainer } from "react-toastify";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -22,6 +23,7 @@ export default function RootLayout({ children }) {
       <body className="bg-white text-slate-900 dark:bg-slate-950 dark:text-white">
         <ThemeProvider>
           <Navbar />
+          <ToastContainer />
           {children}
           <Footer />
         </ThemeProvider>

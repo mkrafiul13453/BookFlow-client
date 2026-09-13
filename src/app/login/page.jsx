@@ -15,6 +15,7 @@ import {
 } from "@heroui/react";
 import { BookOpen, Loader2, ArrowRight } from "lucide-react";
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 
 export default function LoginPage() {
   const [loading, setLoading] = useState(false);
@@ -26,20 +27,20 @@ export default function LoginPage() {
 
     setLoading(true);
 
-    try {
+
       const formData = new FormData(e.currentTarget);
 
       const user = Object.fromEntries(formData.entries());
 
       await authClient.signIn.email({
         ...user,
+        
         callbackURL: "/",
+        
       });
-    } catch (error) {
-      console.error("Login error:", error);
-    } finally {
-      setLoading(false);
-    }
+    toast.success("Successfully logged in!");
+      
+   
   };
 
   // Google Login

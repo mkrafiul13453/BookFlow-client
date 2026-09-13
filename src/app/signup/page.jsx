@@ -1,8 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { authClient } from "@/lib/auth-client";
-import { Button } from "@heroui/react";
+import { Button, Form, Label, ListBox ,Select} from "@heroui/react";
 import {
   BookOpen,
   Loader2,
@@ -10,6 +9,8 @@ import {
 } from "lucide-react";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import { authClient } from "@/lib/auth-client";
+import { toast } from "react-toastify";
 
 export default function SignUpPage() {
   const router = useRouter();
@@ -22,31 +23,23 @@ export default function SignUpPage() {
   // =========================================
   const onSubmit = async (e) => {
     e.preventDefault();
-
     setLoading(true);
-
-    try {
       const formData = new FormData(e.currentTarget);
-
       const user = Object.fromEntries(formData.entries());
+      console.log(user);
+      // return;
 
-      const result = await authClient.signUp.email({
-        name: user.name,
-        email: user.email,
-        password: user.password,
-        image: user.image || undefined,
-        callbackURL: "/",
+      await authClient.signUp.email({
+        ...user,
+        plan: "free",
       });
 
-      console.log("Signup successful:", result);
+      // console.log("Signup successful:", result);
 
+    toast.success("Successfully signed up!");
       router.push("/");
       router.refresh();
-    } catch (error) {
-      console.error("Signup error:", error);
-    } finally {
-      setLoading(false);
-    }
+   
   };
 
   // =========================================
@@ -69,28 +62,10 @@ export default function SignUpPage() {
 
   return (
     <main
-      className="
-        min-h-[calc(100vh-72px)]
-        bg-slate-50
-        px-4
-        py-8
-        transition-colors
-        duration-300
-        sm:px-6
-        sm:py-10
-        md:py-12
-        dark:bg-slate-950
-      "
+      className="min-h-[calc(100vh-72px)] bg-slate-50 px-4 py-8 transition-colors duration-300 sm:px-6 sm:py-10 md:py-12 dark:bg-slate-950"
     >
       <div
-        className="
-          mx-auto
-          flex
-          w-full
-          max-w-md
-          flex-col
-          items-center
-        "
+        className="mx-auto flex w-full max-w-md flex-col items-center"
       >
 
         {/* =========================================
@@ -99,27 +74,10 @@ export default function SignUpPage() {
 
         <Link
           href="/"
-          className="
-            mb-7
-            flex
-            items-center
-            gap-2.5
-            transition-opacity
-            hover:opacity-80
-          "
+          className="mb-7 flex items-center gap-2.5 transition-opacity hover:opacity-80"
         >
           <div
-            className="
-              flex
-              h-11
-              w-11
-              items-center
-              justify-center
-              rounded-xl
-              bg-blue-600
-              text-white
-              shadow-md
-            "
+            className="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-600 text-white shadow-md"
           >
             <BookOpen
               size={24}
@@ -149,22 +107,7 @@ export default function SignUpPage() {
         ========================================== */}
 
         <div
-          className="
-            w-full
-            rounded-2xl
-            border
-            border-slate-200
-            bg-white
-            p-5
-            shadow-lg
-            shadow-slate-200/40
-            transition-colors
-            duration-300
-            sm:p-7
-            dark:border-slate-800
-            dark:bg-slate-900
-            dark:shadow-black/20
-          "
+          className="w-full rounded-2xl border border-slate-200 bg-white p-5 shadow-lg shadow-slate-200/40 transition-colors duration-300 sm:p-7 dark:border-slate-800 dark:bg-slate-900 dark:shadow-black/20"
         >
 
           {/* =========================================
@@ -173,26 +116,13 @@ export default function SignUpPage() {
 
           <div className="mb-7 text-center">
             <h1
-              className="
-                text-2xl
-                font-bold
-                tracking-tight
-                text-slate-900
-                sm:text-3xl
-                dark:text-white
-              "
+              className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl dark:text-white"
             >
               Create an account
             </h1>
 
             <p
-              className="
-                mt-2
-                text-sm
-                leading-6
-                text-slate-500
-                dark:text-slate-400
-              "
+              className="mt-2 text-sm leading-6 text-slate-500 dark:text-slate-400"
             >
               Join BookFlow and start your reading
               journey.
@@ -206,21 +136,7 @@ export default function SignUpPage() {
           <Button
             type="button"
             variant="secondary"
-            className="
-              h-11
-              w-full
-              rounded-xl
-              border
-              border-slate-300
-              bg-white
-              font-medium
-              text-slate-700
-              hover:bg-slate-50
-              dark:border-slate-700
-              dark:bg-slate-900
-              dark:text-slate-200
-              dark:hover:bg-slate-800
-            "
+            className="h-11 w-full rounded-xl border border-slate-300 bg-white font-medium text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800"
             onPress={handleGoogleSignup}
             isDisabled={googleLoading || loading}
           >
@@ -245,41 +161,20 @@ export default function SignUpPage() {
           ========================================== */}
 
           <div
-            className="
-              my-7
-              flex
-              items-center
-              gap-3
-            "
+            className="my-7 flex items-center gap-3"
           >
             <div
-              className="
-                h-px
-                flex-1
-                bg-slate-200
-                dark:bg-slate-700
-              "
+              className="h-px flex-1 bg-slate-200 dark:bg-slate-700"
             />
 
             <span
-              className="
-                text-xs
-                font-medium
-                uppercase
-                tracking-wider
-                text-slate-400
-              "
+              className="text-xs font-medium uppercase tracking-wider text-slate-400"
             >
               OR
             </span>
 
             <div
-              className="
-                h-px
-                flex-1
-                bg-slate-200
-                dark:bg-slate-700
-              "
+              className="h-px flex-1 bg-slate-200 dark:bg-slate-700"
             />
           </div>
 
@@ -287,7 +182,7 @@ export default function SignUpPage() {
               SIGN UP FORM
           ========================================== */}
 
-          <form
+          <Form
             onSubmit={onSubmit}
             className="w-full"
           >
@@ -299,14 +194,7 @@ export default function SignUpPage() {
             <div className="mb-5">
               <label
                 htmlFor="name"
-                className="
-                  mb-2
-                  block
-                  text-sm
-                  font-semibold
-                  text-slate-700
-                  dark:text-slate-200
-                "
+                className="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-200"
               >
                 Full Name
               </label>
@@ -318,29 +206,7 @@ export default function SignUpPage() {
                 required
                 autoComplete="name"
                 placeholder="John Doe"
-                className="
-                  h-11
-                  w-full
-                  rounded-xl
-                  border
-                  border-slate-300
-                  bg-white
-                  px-4
-                  text-sm
-                  text-slate-900
-                  outline-none
-                  transition-all
-                  placeholder:text-slate-400
-                  focus:border-blue-500
-                  focus:ring-2
-                  focus:ring-blue-500/20
-                  dark:border-slate-700
-                  dark:bg-slate-800
-                  dark:text-white
-                  dark:placeholder:text-slate-500
-                  dark:focus:border-blue-500
-                  dark:focus:ring-blue-500/20
-                "
+                className="h-11 w-full rounded-xl border border-slate-300 bg-white px-4 text-sm text-slate-900 outline-none transition-all placeholder:text-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 dark:border-slate-700 dark:bg-slate-800 dark:text-white dark:placeholder:text-slate-500 dark:focus:border-blue-500 dark:focus:ring-blue-500/20"
               />
             </div>
 
@@ -351,6 +217,7 @@ export default function SignUpPage() {
             <div className="mb-5">
               <label
                 htmlFor="image"
+                
                 className="
                   mb-2
                   block
@@ -360,7 +227,7 @@ export default function SignUpPage() {
                   dark:text-slate-200
                 "
               >
-                Profile Image URL
+                Profile Image 
 
                 <span
                   className="
@@ -376,32 +243,10 @@ export default function SignUpPage() {
               <input
                 id="image"
                 name="image"
-                type="url"
+                type="text"
                 autoComplete="url"
                 placeholder="https://example.com/photo.jpg"
-                className="
-                  h-11
-                  w-full
-                  rounded-xl
-                  border
-                  border-slate-300
-                  bg-white
-                  px-4
-                  text-sm
-                  text-slate-900
-                  outline-none
-                  transition-all
-                  placeholder:text-slate-400
-                  focus:border-blue-500
-                  focus:ring-2
-                  focus:ring-blue-500/20
-                  dark:border-slate-700
-                  dark:bg-slate-800
-                  dark:text-white
-                  dark:placeholder:text-slate-500
-                  dark:focus:border-blue-500
-                  dark:focus:ring-blue-500/20
-                "
+               className="h-11 w-full rounded-xl border border-slate-300 bg-white px-4 text-sm text-slate-900 outline-none transition-all placeholder:text-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 dark:border-slate-700 dark:bg-slate-800 dark:text-white dark:placeholder:text-slate-500 dark:focus:border-blue-500 dark:focus:ring-blue-500/20"
               />
             </div>
 
@@ -431,29 +276,7 @@ export default function SignUpPage() {
                 required
                 autoComplete="email"
                 placeholder="you@example.com"
-                className="
-                  h-11
-                  w-full
-                  rounded-xl
-                  border
-                  border-slate-300
-                  bg-white
-                  px-4
-                  text-sm
-                  text-slate-900
-                  outline-none
-                  transition-all
-                  placeholder:text-slate-400
-                  focus:border-blue-500
-                  focus:ring-2
-                  focus:ring-blue-500/20
-                  dark:border-slate-700
-                  dark:bg-slate-800
-                  dark:text-white
-                  dark:placeholder:text-slate-500
-                  dark:focus:border-blue-500
-                  dark:focus:ring-blue-500/20
-                "
+                className="h-11 w-full rounded-xl border border-slate-300 bg-white px-4 text-sm text-slate-900 outline-none transition-all placeholder:text-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 dark:border-slate-700 dark:bg-slate-800 dark:text-white dark:placeholder:text-slate-500 dark:focus:border-blue-500 dark:focus:ring-blue-500/20"
               />
             </div>
 
@@ -464,14 +287,7 @@ export default function SignUpPage() {
             <div className="mb-1">
               <label
                 htmlFor="password"
-                className="
-                  mb-2
-                  block
-                  text-sm
-                  font-semibold
-                  text-slate-700
-                  dark:text-slate-200
-                "
+                className="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-200"
               >
                 Password
               </label>
@@ -484,29 +300,7 @@ export default function SignUpPage() {
                 minLength={8}
                 autoComplete="new-password"
                 placeholder="Create a password"
-                className="
-                  h-11
-                  w-full
-                  rounded-xl
-                  border
-                  border-slate-300
-                  bg-white
-                  px-4
-                  text-sm
-                  text-slate-900
-                  outline-none
-                  transition-all
-                  placeholder:text-slate-400
-                  focus:border-blue-500
-                  focus:ring-2
-                  focus:ring-blue-500/20
-                  dark:border-slate-700
-                  dark:bg-slate-800
-                  dark:text-white
-                  dark:placeholder:text-slate-500
-                  dark:focus:border-blue-500
-                  dark:focus:ring-blue-500/20
-                "
+                className="h-11 w-full rounded-xl border border-slate-300 bg-white px-4 text-sm text-slate-900 outline-none transition-all placeholder:text-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 dark:border-slate-700 dark:bg-slate-800 dark:text-white dark:placeholder:text-slate-500 dark:focus:border-blue-500 dark:focus:ring-blue-500/20"
               />
 
               <p
@@ -521,26 +315,52 @@ export default function SignUpPage() {
                 characters.
               </p>
             </div>
+            {/* =====================================
+                SIGNUP AS
+            ====================================== */}
+            <div className="mb-1">
+              <label
+                htmlFor="role"
+                className="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-200"
+              >
+                Signup As
+              </label>
 
+              <Select
+                isRequired
+                name="role"
+                placeholder="Select one"
+              >
+                <Select.Trigger
+                  id="role"
+                  className="h-11 w-full rounded-xl border border-slate-300 bg-white px-4 text-sm text-slate-900 outline-none transition-all placeholder:text-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 dark:border-slate-700 dark:bg-slate-800 dark:text-white dark:placeholder:text-slate-500 dark:focus:border-blue-500 dark:focus:ring-blue-500/20"
+                >
+                  <Select.Value />
+                  <Select.Indicator />
+                </Select.Trigger>
+
+                <Select.Popover>
+                  <ListBox>
+                    <ListBox.Item id="librarian" textValue="librarian">
+                      Librarian
+                      <ListBox.ItemIndicator />
+                    </ListBox.Item>
+
+                    <ListBox.Item id="user" textValue="user">
+                      User
+                      <ListBox.ItemIndicator />
+                    </ListBox.Item>
+                  </ListBox>
+                </Select.Popover>
+              </Select>
+            </div>
             {/* =====================================
                 CREATE ACCOUNT BUTTON
             ====================================== */}
 
             <Button
               type="submit"
-              className="
-                mt-5
-                h-11
-                w-full
-                rounded-xl
-                bg-blue-600
-                font-semibold
-                text-white
-                shadow-sm
-                transition-all
-                hover:bg-blue-700
-                hover:shadow-md
-              "
+              className="mt-5 h-11 w-full rounded-xl bg-blue-600 font-semibold text-white shadow-sm transition-all hover:bg-blue-700 hover:shadow-md"
               isDisabled={
                 loading || googleLoading
               }
@@ -562,21 +382,14 @@ export default function SignUpPage() {
                 </>
               )}
             </Button>
-          </form>
+          </Form>
 
           {/* =========================================
               LOGIN LINK
           ========================================== */}
 
           <div
-            className="
-              mt-7
-              border-t
-              border-slate-200
-              pt-6
-              text-center
-              dark:border-slate-800
-            "
+            className="mt-7 border-t border-slate-200 pt-6 text-center dark:border-slate-800"
           >
             <p
               className="
@@ -589,15 +402,7 @@ export default function SignUpPage() {
 
               <Link
                 href="/login"
-                className="
-                  font-semibold
-                  text-blue-600
-                  transition
-                  hover:text-blue-700
-                  hover:underline
-                  dark:text-blue-400
-                  dark:hover:text-blue-300
-                "
+                className="font-semibold text-blue-600 transition hover:text-blue-700 hover:underline dark:text-blue-400 dark:hover:text-blue-300"
               >
                 Sign in
               </Link>
@@ -610,13 +415,7 @@ export default function SignUpPage() {
         ========================================== */}
 
         <p
-          className="
-            mt-6
-            text-center
-            text-xs
-            text-slate-400
-            dark:text-slate-500
-          "
+          className="mt-6 text-center text-xs text-slate-400 dark:text-slate-500"
         >
           © {new Date().getFullYear()} BookFlow.
           All rights reserved.
