@@ -11,8 +11,10 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
 import { toast } from "react-toastify";
+import { imageUpload } from "@/lib/imageUpload";
 
 export default function SignUpPage() {
+
   const router = useRouter();
 
   const [loading, setLoading] = useState(false);
@@ -26,12 +28,15 @@ export default function SignUpPage() {
     setLoading(true);
       const formData = new FormData(e.currentTarget);
       const user = Object.fromEntries(formData.entries());
-      console.log(user);
+      const image = await imageUpload(user?.image);
+      
+      // console.log(user);
       // return;
 
       await authClient.signUp.email({
         ...user,
         plan: "free",
+        image,
       });
 
       // console.log("Signup successful:", result);
@@ -61,6 +66,7 @@ export default function SignUpPage() {
   };
 
   return (
+    
     <main
       className="min-h-[calc(100vh-72px)] bg-slate-50 px-4 py-8 transition-colors duration-300 sm:px-6 sm:py-10 md:py-12 dark:bg-slate-950"
     >
@@ -216,7 +222,6 @@ export default function SignUpPage() {
 
             <div className="mb-5">
               <label
-                htmlFor="image"
                 
                 className="
                   mb-2
@@ -243,7 +248,7 @@ export default function SignUpPage() {
               <input
                 id="image"
                 name="image"
-                type="text"
+                type="file"
                 autoComplete="url"
                 placeholder="https://example.com/photo.jpg"
                className="h-11 w-full rounded-xl border border-slate-300 bg-white px-4 text-sm text-slate-900 outline-none transition-all placeholder:text-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 dark:border-slate-700 dark:bg-slate-800 dark:text-white dark:placeholder:text-slate-500 dark:focus:border-blue-500 dark:focus:ring-blue-500/20"

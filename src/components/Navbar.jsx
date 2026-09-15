@@ -29,15 +29,13 @@ import {
   Dropdown,
   Label,
 } from "@heroui/react";
+import CartIcon from "./CartIcon";
 
 const Navbar = () => {
   const { data: session } = authClient.useSession();
-
-  console.log(session);
-
+  // console.log(session);
   const user = session?.user;
-
-  console.log(user);
+  // console.log(user);
 
   const pathname = usePathname();
   const { theme, setTheme } = useTheme();
@@ -158,11 +156,14 @@ const Navbar = () => {
 
           </div>
 
+
           {/* =================================================
               RIGHT SIDE
           ================================================== */}
 
           <div className="ml-5 flex items-center gap-2 border-l border-slate-200 pl-5 dark:border-slate-800">
+            {/* Cart Icon */}
+            <CartIcon cartCount={3} />
 
             {/* Theme Toggle */}
 
@@ -313,6 +314,8 @@ const Navbar = () => {
         ================================================== */}
 
         <div className="ml-auto flex items-center gap-2 xl:hidden">
+          {/* Cart Icon */}
+          <CartIcon cartCount={3} />
 
           {/* Theme Toggle */}
 

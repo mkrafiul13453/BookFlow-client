@@ -9,11 +9,19 @@ import {
   FaLinkedinIn,
 } from "react-icons/fa6";
 import { authClient } from "@/lib/auth-client";
+import { usePathname } from "next/navigation";
 
 export default function Footer() {
+  const pathName = usePathname();
+  if (pathName.includes('dashboard')) {
+    return null;
+  }
+
+
+
   const { data: session } = authClient.useSession();
   const user = session?.user;
-  console.log(user);
+  // console.log(user);
   return (
     <footer className="mt-16 border-t bg-background">
       <div className="container mx-auto px-4">
