@@ -2,6 +2,7 @@
 
 import { addToCart } from "@/lib/api/cart";
 import { authClient } from "@/lib/auth-client";
+import { redirect } from "next/navigation";
 import React from "react";
 import {
     FaBookOpen,
@@ -24,7 +25,8 @@ const BookDetailsPage = ({ book }) => {
 
     const handleAddToCart = async () => {
         if (!session?.user) {
-            alert("Please login first");
+            toast.error("Please login to add to cart");
+            redirect("/login");
             return;
         }
 

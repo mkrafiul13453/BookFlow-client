@@ -58,12 +58,12 @@ const BookCard = ({ book }) => {
                 <div className="mt-auto space-y-2 pt-4">
 
                     {/* Add to Cart */}
-                    <button
+                    {/* <button
                         type="button"
                         className="w-full rounded-lg bg-blue-600 px-3 py-2 text-sm font-medium text-white transition hover:bg-blue-700"
                     >
                         Add to Cart
-                    </button>
+                    </button> */}
 
                     {/* View Details */}
                     <Link
