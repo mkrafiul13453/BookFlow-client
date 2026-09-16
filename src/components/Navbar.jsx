@@ -163,7 +163,7 @@ const Navbar = () => {
 
           <div className="ml-5 flex items-center gap-2 border-l border-slate-200 pl-5 dark:border-slate-800">
             {/* Cart Icon */}
-            <CartIcon cartCount={3} />
+            <CartIcon />
 
             {/* Theme Toggle */}
 
@@ -267,11 +267,13 @@ const Navbar = () => {
                       id="copy-link"
                       textValue="Copy link"
                     >
-                      <CgProfile />
+                     <Link href="/profile" className="flex items-center gap-2">
+                        <CgProfile />
 
-                      <Label>
-                        Profile
-                      </Label>
+                        <Label>
+                          Profile
+                        </Label>
+                     </Link>
                     </Dropdown.Item>
 
                     <Dropdown.Item

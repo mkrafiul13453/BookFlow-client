@@ -1,5 +1,7 @@
 "use client";
 
+import { addToCart } from "@/lib/api/cart";
+import { authClient } from "@/lib/auth-client";
 import React from "react";
 import {
     FaBookOpen,
@@ -11,8 +13,39 @@ import {
     FaBolt,
     FaCheckCircle,
 } from "react-icons/fa";
+import { toast } from "react-toastify";
 
 const BookDetailsPage = ({ book }) => {
+    const { data: session } = authClient.useSession();
+    const user = session?.user;
+    const role = user?.role || "user";
+    console.log(role);
+
+
+    const handleAddToCart = async () => {
+        if (!session?.user) {
+            alert("Please login first");
+            return;
+        }
+
+        try {
+            const result = await addToCart({
+                userId: session.user.id,
+                bookId: book._id,
+            });
+
+            if (result.success) {
+                toast.success("Book added to cart");
+            } else {
+                toast.error("Failed to add book to cart");
+            }
+        } catch (error) {
+            console.error(error);
+            toast.error("Failed to add book to cart");
+        }
+    };
+
+
     if (!book) {
         return (
             <div className="flex min-h-[60vh] items-center justify-center px-4">
@@ -167,6 +200,7 @@ const BookDetailsPage = ({ book }) => {
                                 {/* Add to Cart */}
                                 <button
                                     type="button"
+                                    onClick={handleAddToCart}
                                     className="flex items-center justify-center gap-2 rounded-xl border border-blue-600 px-5 py-3.5 font-semibold text-blue-600 transition hover:bg-blue-600 hover:text-white dark:text-blue-400 dark:hover:text-white"
                                 >
                                     <FaShoppingCart />

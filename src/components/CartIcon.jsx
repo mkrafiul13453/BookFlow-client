@@ -2,8 +2,42 @@
 
 import Link from "next/link";
 import { ShoppingCart } from "lucide-react";
+import { useEffect, useState } from "react";
+import { authClient } from "@/lib/auth-client";
+import { getCart } from "@/lib/api/cart";
 
-const CartIcon = ({ cartCount = 0 }) => {
+const CartIcon = () => {
+    const { data: session } = authClient.useSession();
+
+    const [cartCount, setCartCount] = useState(0);
+
+    useEffect(() => {
+        const loadCartCount = async () => {
+            if (!session?.user?.id) {
+                setCartCount(0);
+                return;
+            }
+
+            try {
+                const data = await getCart(
+                    session.user.id
+                );
+
+                const totalQuantity = data.reduce(
+                    (total, item) =>
+                        total + Number(item.quantity),
+                    0
+                );
+
+                setCartCount(totalQuantity);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        loadCartCount();
+    }, [session?.user?.id]);
+
     return (
         <Link
             href="/cart"

@@ -18,10 +18,9 @@ const Table = ({ books, userId }) => {
 
         const result = await deleteBookByLibrarian(id, userId);
 
-        // console.log("Delete result:", result);
-
         if (result.deletedCount > 0) {
             window.location.reload();
+            toast.error("Book deleted successfully!");
         }
     };
 
@@ -44,7 +43,6 @@ const Table = ({ books, userId }) => {
         console.log("formData",formData);
 
         
-
         const updatedBook = {
             title: formData.get("title"),
             author: formData.get("author"),
@@ -53,7 +51,6 @@ const Table = ({ books, userId }) => {
             description: formData.get("description"),
         };
 
-        // console.log("Book ID:", bookId);
         console.log("User ID:", userId);
         console.log("Updated Book:", updatedBook);
 
@@ -67,8 +64,8 @@ const Table = ({ books, userId }) => {
 
         if (result.modifiedCount > 0) {
             setIsModalOpen(false);
-            toast.success("Book updated successfully!");
             window.location.reload();
+            toast.success("Book updated successfully!");
         }
     };
 

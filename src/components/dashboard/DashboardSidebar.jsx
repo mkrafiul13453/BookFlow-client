@@ -19,6 +19,7 @@ import {
     BookOpen,
     Receipt,
     ChevronLeft,
+    Heart,
 } from "lucide-react";
 
 const DashboardSidebar = ({ role = "user" }) => {
@@ -71,6 +72,12 @@ const DashboardSidebar = ({ role = "user" }) => {
                 name: "My Reviews",
                 href: "/dashboard/user/reviews",
                 icon: Star,
+            },
+            {
+                name: "Wishlist",
+                href: "/dashboard/user/wishlist",
+                icon: Heart,
+               
             },
         ],
 
