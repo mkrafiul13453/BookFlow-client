@@ -113,12 +113,16 @@ const Features = () => {
                                         items-center
                                         justify-center
                                         rounded-2xl
-                                        bg-[#fff4ed]
-                                        text-[#f26b4f]
+
+                                        bg-sky-50
+                                        text-sky-500
+
                                         shadow-sm
+
                                         transition-colors
                                         duration-300
-                                        group-hover:bg-[#f26b4f]
+
+                                        group-hover:bg-sky-500
                                         group-hover:text-white
 
                                         sm:h-20
@@ -131,9 +135,7 @@ const Features = () => {
                                     <Icon
                                         className="
                                             text-3xl
-
                                             sm:text-4xl
-
                                             lg:text-5xl
                                         "
                                     />

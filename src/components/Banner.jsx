@@ -1,182 +1,250 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 
 const slides = [
   {
     id: 1,
-    eyebrow: "EDITOR'S CHOICE",
-    title: "Discover Your Next Favorite Book",
+    eyebrow: "Editor's choice",
+    title: "Discover your next favorite book",
     description:
       "Explore inspiring stories, timeless classics, and unforgettable reads.",
     image: "/banner/book-1.png",
   },
   {
     id: 2,
-    eyebrow: "READ • LEARN • GROW",
-    title: "Books That Inspire Great Ideas",
+    eyebrow: "Read · learn · grow",
+    title: "Books that inspire great ideas",
     description:
       "Find carefully selected books that make every reading moment meaningful.",
     image: "/banner/book-2.png",
   },
   {
     id: 3,
-    eyebrow: "BOOKFLOW COLLECTION",
-    title: "Build Your Perfect Reading List",
+    eyebrow: "Bookflow collection",
+    title: "Build your perfect reading list",
     description:
       "From fiction to technology, discover books for every kind of reader.",
     image: "/banner/book-3.png",
   },
 ];
 
+const AUTOPLAY_MS = 5500;
+
 const Banner = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const [direction, setDirection] = useState(1);
 
-  // Automatically change slide
+  const progressKey = useRef(0);
+
+  // Go to a specific slide
+  const goTo = useCallback(
+    (index) => {
+      setDirection(index > currentSlide ? 1 : -1);
+      setCurrentSlide(index);
+      progressKey.current += 1;
+    },
+    [currentSlide]
+  );
+
+  // Next slide
+  const next = useCallback(() => {
+    setDirection(1);
+
+    setCurrentSlide((prev) =>
+      prev === slides.length - 1 ? 0 : prev + 1
+    );
+
+    progressKey.current += 1;
+  }, []);
+
+  // Previous slide
+  const prev = useCallback(() => {
+    setDirection(-1);
+
+    setCurrentSlide((prev) =>
+      prev === 0 ? slides.length - 1 : prev - 1
+    );
+
+    progressKey.current += 1;
+  }, []);
+
+  // Auto play
   useEffect(() => {
+    if (isPaused) return;
+
     const interval = setInterval(() => {
-      setCurrentSlide((previous) =>
-        previous === slides.length - 1 ? 0 : previous + 1
-      );
-    }, 3000);
+      next();
+    }, AUTOPLAY_MS);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [isPaused, next]);
 
   const current = slides[currentSlide];
 
   return (
     <section className="w-full px-3 pt-4 sm:px-5 md:px-6 lg:px-8">
-      <div className="relative mx-auto max-w-7xl overflow-hidden rounded-2xl bg-blue-300 shadow-sm">
+      <div
+        onMouseEnter={() => setIsPaused(true)}
+        onMouseLeave={() => setIsPaused(false)}
+        className="relative mx-auto max-w-7xl overflow-hidden rounded-2xl border border-sky-100 bg-gradient-to-br from-sky-50 via-sky-100 to-cyan-50 shadow-[0_20px_60px_-25px_rgba(14,116,190,0.35)] sm:rounded-3xl"
+      >
+        {/* Background texture */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 opacity-40"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle at 14% 20%, rgba(56,155,224,0.18) 0%, transparent 45%), radial-gradient(circle at 88% 82%, rgba(14,116,190,0.14) 0%, transparent 50%)",
+          }}
+        />
 
-        {/* Decorative Background Circle */}
-        <div className="absolute -left-20 -top-20 h-56 w-56 rounded-full bg-white/50 blur-sm sm:h-72 sm:w-72" />
-
-        <div className="absolute -bottom-24 right-0 h-64 w-64 rounded-full bg-blue-200/60 blur-sm" />
-
-        {/* Main Slider */}
-        <div className="relative min-h-[500px] sm:min-h-[420px] md:min-h-[450px] lg:min-h-[470px]">
-
-          <AnimatePresence mode="wait">
+        <div className="relative min-h-[540px] sm:min-h-[440px] md:min-h-[460px] lg:min-h-[480px]">
+          <AnimatePresence mode="wait" custom={direction}>
             <motion.div
               key={current.id}
-              initial={{ opacity: 0, x: 80 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -80 }}
-              transition={{
-                duration: 0.7,
-                ease: "easeInOut",
+              custom={direction}
+              initial={{
+                opacity: 0,
+                x: direction * 40,
               }}
-              className="absolute inset-0 flex flex-col items-center justify-center gap-3 px-5 py-7 sm:gap-5 sm:px-8 sm:py-8 md:flex-row md:gap-10 md:px-12 md:py-10 lg:gap-16 lg:px-20"            >
-
-              {/* =========================
-                                LEFT - BOOK IMAGE
-                            ========================== */}
+              animate={{
+                opacity: 1,
+                x: 0,
+              }}
+              exit={{
+                opacity: 0,
+                x: direction * -40,
+              }}
+              transition={{
+                duration: 0.55,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+              className="absolute inset-0 flex flex-col-reverse items-center justify-center gap-8 px-6 py-10 sm:gap-6 sm:px-8 sm:py-10 md:flex-row md:gap-10 md:px-12 md:py-12 lg:gap-16 lg:px-16 xl:px-20"
+            >
+              {/* Book Image */}
               <motion.div
-                initial={{ opacity: 0, scale: 0.8, y: 30 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
+                initial={{
+                  opacity: 0,
+                  scale: 0.92,
+                }}
+                animate={{
+                  opacity: 1,
+                  scale: 1,
+                }}
                 transition={{
-                  duration: 0.8,
-                  delay: 0.15,
+                  duration: 0.6,
+                  delay: 0.1,
                   ease: "easeOut",
                 }}
-                className="relative flex w-full items-center justify-center md:w-1/2"
+                className="relative flex w-full items-center justify-center md:w-2/5"
               >
+                <div className="absolute h-44 w-44 rounded-[40%] bg-white/60 shadow-inner ring-1 ring-white/70 sm:h-56 sm:w-56 md:h-60 md:w-60 lg:h-72 lg:w-72" />
 
-                {/* White Circle Behind Book */}
-                <div className="absolute h-48 w-48 rounded-full bg-white/70 sm:h-60 sm:w-60 md:h-64 md:w-64 lg:h-72 lg:w-72" />
-
-                {/* Decorative Shape */}
-                <motion.div
-                  animate={{
-                    rotate: [0, 4, 0, -4, 0],
-                  }}
-                  transition={{
-                    duration: 6,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  }}
-                  className="absolute h-20 w-20 rounded-full bg-blue-200/70 blur-sm sm:h-28 sm:w-28"
-                />
-
-                {/* Book */}
                 <motion.img
                   src={current.image}
                   alt={current.title}
                   animate={{
-                    y: [0, -8, 0],
+                    y: [0, -10, 0],
                   }}
                   transition={{
-                    duration: 3,
+                    duration: 4,
                     repeat: Infinity,
                     ease: "easeInOut",
                   }}
-                  className="relative z-10 h-36 w-auto object-contain drop-shadow-2xl sm:h-48 md:h-64 lg:h-72"                />
+                  className="relative z-10 h-40 w-auto object-contain drop-shadow-[0_25px_35px_rgba(15,64,110,0.25)] sm:h-52 md:h-56 lg:h-64 xl:h-72"
+                />
               </motion.div>
 
-              {/* =========================
-                                RIGHT - CONTENT
-                            ========================== */}
-              <div className="z-10 flex w-full flex-col items-center text-center md:w-1/2 md:items-start md:text-left">
-
-                {/* Eyebrow */}
-                <motion.p
-                  initial={{ opacity: 0, y: 15 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3, duration: 0.5 }}
-                  className="mb-2 text-[10px] font-semibold tracking-[0.2em] text-slate-500 sm:text-xs"
+              {/* Content */}
+              <div className="z-10 flex w-full flex-col items-center text-center md:w-3/5 md:items-start md:text-left">
+                <motion.span
+                  initial={{
+                    opacity: 0,
+                    y: 12,
+                  }}
+                  animate={{
+                    opacity: 1,
+                    y: 0,
+                  }}
+                  transition={{
+                    delay: 0.2,
+                    duration: 0.45,
+                  }}
+                  className="mb-3 inline-flex items-center rounded-full bg-white/80 px-3.5 py-1 text-xs font-medium text-sky-700 shadow-sm ring-1 ring-sky-200/80 sm:text-sm"
                 >
                   {current.eyebrow}
-                </motion.p>
+                </motion.span>
 
-                {/* Title */}
                 <motion.h1
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.4, duration: 0.6 }}
-                  className="max-w-xl text-3xl font-extrabold leading-tight text-slate-950 sm:text-4xl md:text-4xl lg:text-5xl xl:text-6xl"
+                  initial={{
+                    opacity: 0,
+                    y: 16,
+                  }}
+                  animate={{
+                    opacity: 1,
+                    y: 0,
+                  }}
+                  transition={{
+                    delay: 0.28,
+                    duration: 0.5,
+                  }}
+                  className="max-w-xl font-serif text-3xl font-semibold leading-[1.15] tracking-tight text-slate-900 sm:text-4xl md:text-[2.6rem] lg:text-5xl"
                 >
                   {current.title}
                 </motion.h1>
 
-                {/* Small Line */}
-                <motion.div
-                  initial={{ width: 0 }}
-                  animate={{ width: 75 }}
-                  transition={{
-                    delay: 0.7,
-                    duration: 0.5,
-                  }}
-                  className="my-4 h-1 rounded-full bg-blue-400"
-                />
-
-                {/* Description */}
                 <motion.p
-                  initial={{ opacity: 0, y: 15 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.55, duration: 0.5 }}
-                  className="max-w-md text-sm leading-6 text-slate-600 sm:text-base"
+                  initial={{
+                    opacity: 0,
+                    y: 14,
+                  }}
+                  animate={{
+                    opacity: 1,
+                    y: 0,
+                  }}
+                  transition={{
+                    delay: 0.38,
+                    duration: 0.45,
+                  }}
+                  className="mt-4 max-w-md text-balance text-sm leading-6 text-slate-600 sm:text-base"
                 >
                   {current.description}
                 </motion.p>
 
-                {/* Buy Now Button */}
                 <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.7, duration: 0.5 }}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="mt-4 sm:mt-6"                >
+                  initial={{
+                    opacity: 0,
+                    y: 16,
+                  }}
+                  animate={{
+                    opacity: 1,
+                    y: 0,
+                  }}
+                  transition={{
+                    delay: 0.48,
+                    duration: 0.45,
+                  }}
+                  className="mt-7 flex items-center gap-4 sm:mt-8"
+                >
                   <Link
                     href="/books"
-                    className="group inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-slate-900 shadow-md transition-all duration-300 hover:bg-slate-950 hover:text-white hover:shadow-lg"
+                    className="group inline-flex items-center gap-2 rounded-full bg-sky-700 px-6 py-3 text-sm font-semibold text-white shadow-md shadow-sky-900/15 transition-colors duration-300 hover:bg-slate-900 sm:px-7"
                   >
-                    Buy Now
+                    Shop the collection
 
-                    <span className="text-sky-500 transition-transform duration-300 group-hover:translate-x-1 group-hover:text-white">
+                    <span
+                      aria-hidden="true"
+                      className="transition-transform duration-300 group-hover:translate-x-1"
+                    >
                       →
                     </span>
                   </Link>
@@ -185,25 +253,85 @@ const Banner = () => {
             </motion.div>
           </AnimatePresence>
 
-          {/* =========================
-                        SLIDER DOTS
-                    ========================== */}
-          <div className="absolute bottom-3 left-1/2 z-20 flex -translate-x-1/2 items-center gap-2 sm:bottom-5">
-            {slides.map((slide, index) => (
+          {/* Previous Button */}
+          <button
+            type="button"
+            onClick={prev}
+            aria-label="Previous slide"
+            className="absolute left-3 top-1/2 z-20 hidden -translate-y-1/2 items-center justify-center rounded-full bg-white/80 p-2.5 text-slate-700 shadow-md ring-1 ring-sky-100 transition hover:bg-white hover:text-sky-700 lg:flex"
+          >
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M15 18l-6-6 6-6" />
+            </svg>
+          </button>
+
+          {/* Next Button */}
+          <button
+            type="button"
+            onClick={next}
+            aria-label="Next slide"
+            className="absolute right-3 top-1/2 z-20 hidden -translate-y-1/2 items-center justify-center rounded-full bg-white/80 p-2.5 text-slate-700 shadow-md ring-1 ring-sky-100 transition hover:bg-white hover:text-sky-700 lg:flex"
+          >
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M9 18l6-6-6-6" />
+            </svg>
+          </button>
+
+          {/* Progress Indicators */}
+          <div
+            className="absolute bottom-4 left-1/2 z-20 flex -translate-x-1/2 items-center gap-2 sm:bottom-6"
+            role="tablist"
+            aria-label="Slide navigation"
+          >
+            {/* {slides.map((slide, index) => (
               <button
                 key={slide.id}
-                onClick={() => setCurrentSlide(index)}
+                type="button"
+                role="tab"
+                aria-selected={currentSlide === index}
                 aria-label={`Go to slide ${index + 1}`}
-                className="group flex h-5 w-5 items-center justify-center"
+                onClick={() => goTo(index)}
+                className="relative h-1.5 w-8 overflow-hidden rounded-full bg-slate-900/10 transition-colors sm:w-10"
               >
-                <span
-                  className={`block rounded-full transition-all duration-300 ${currentSlide === index
-                      ? "h-2.5 w-7 bg-blue-500"
-                      : "h-2.5 w-2.5 bg-slate-400/70 group-hover:bg-slate-500"
-                    }`}
-                />
+                {currentSlide === index && (
+                  <motion.span
+                    key={progressKey.current}
+                    initial={{
+                      scaleX: 0,
+                    }}
+                    animate={{
+                      scaleX: isPaused ? 0 : 1,
+                    }}
+                    transition={{
+                      duration: isPaused ? 0 : AUTOPLAY_MS / 1000,
+                      ease: "linear",
+                    }}
+                    style={{
+                      transformOrigin: "left",
+                    }}
+                    className="absolute inset-0 rounded-full bg-sky-600"
+                  />
+                )}
               </button>
-            ))}
+            ))} */}
           </div>
         </div>
       </div>
