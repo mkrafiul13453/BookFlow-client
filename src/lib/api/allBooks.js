@@ -27,7 +27,7 @@ export const getBookById = async (id) => {
 
 export const getBooksByUser = async (userId) => {
     const res = await fetch(
-        `${baseUrl}/librarian/add-book?userId=${userId}`
+        `${baseUrl}/librarian/add-book/data?userId=${userId}`
     );
 
     return res.json();
@@ -55,6 +55,16 @@ export const updateBook = async (bookId, userId, bookData) => {
             body: JSON.stringify(bookData),
         }
     );
+
+    return res.json();
+};
+
+
+
+export const deleteBookByAdmin = async (bookId) => {
+    const res = await fetch(`${baseUrl}/books/${bookId}`, {
+        method: "DELETE",
+    });
 
     return res.json();
 };

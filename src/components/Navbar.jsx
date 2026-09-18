@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 
@@ -30,8 +30,10 @@ import {
   Label,
 } from "@heroui/react";
 import CartIcon from "./CartIcon";
+import { toast } from "react-toastify";
 
 const Navbar = () => {
+  const router = useRouter();
   const { data: session } = authClient.useSession();
   // console.log(session);
   const user = session?.user;
@@ -89,6 +91,8 @@ const Navbar = () => {
     try {
       await authClient.signOut();
       closeMobileMenu();
+      router.push("/");
+      toast.success("You have been logged out successfully!");
     } catch (error) {
       console.error("Logout failed:", error);
     }
