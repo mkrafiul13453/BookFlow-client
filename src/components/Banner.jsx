@@ -95,7 +95,7 @@ const Banner = () => {
       <div
         onMouseEnter={() => setIsPaused(true)}
         onMouseLeave={() => setIsPaused(false)}
-        className="relative mx-auto max-w-7xl overflow-hidden rounded-2xl border border-sky-100 bg-gradient-to-br from-sky-50 via-sky-100 to-cyan-50 shadow-[0_20px_60px_-25px_rgba(14,116,190,0.35)] sm:rounded-3xl"
+        className="relative mx-auto max-w-7xl overflow-hidden rounded-2xl border border-sky-100 bg-gradient-to-br from-sky-50 via-sky-100 to-cyan-50 shadow-[0_20px_60px_-25px_rgba(14,116,190,0.35)] dark:border-slate-700 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 sm:rounded-3xl"
       >
         {/* Background texture */}
         <div
@@ -147,7 +147,7 @@ const Banner = () => {
                 }}
                 className="relative flex w-full items-center justify-center md:w-2/5"
               >
-                <div className="absolute h-44 w-44 rounded-[40%] bg-white/60 shadow-inner ring-1 ring-white/70 sm:h-56 sm:w-56 md:h-60 md:w-60 lg:h-72 lg:w-72" />
+                <div className="absolute h-44 w-44 rounded-[40%] bg-white/60 shadow-inner ring-1 ring-white/70 dark:bg-slate-700/60 dark:ring-slate-600/70 sm:h-56 sm:w-56 md:h-60 md:w-60 lg:h-72 lg:w-72" />
 
                 <motion.img
                   src={current.image}
@@ -179,7 +179,7 @@ const Banner = () => {
                     delay: 0.2,
                     duration: 0.45,
                   }}
-                  className="mb-3 inline-flex items-center rounded-full bg-white/80 px-3.5 py-1 text-xs font-medium text-sky-700 shadow-sm ring-1 ring-sky-200/80 sm:text-sm"
+                  className="mb-3 inline-flex items-center rounded-full bg-white/80 px-3.5 py-1 text-xs font-medium text-sky-700 shadow-sm ring-1 ring-sky-200/80 dark:bg-slate-800/80 dark:text-sky-300 dark:ring-slate-600 sm:text-sm"
                 >
                   {current.eyebrow}
                 </motion.span>
@@ -197,7 +197,7 @@ const Banner = () => {
                     delay: 0.28,
                     duration: 0.5,
                   }}
-                  className="max-w-xl font-serif text-3xl font-semibold leading-[1.15] tracking-tight text-slate-900 sm:text-4xl md:text-[2.6rem] lg:text-5xl"
+                  className="max-w-xl font-serif text-3xl font-semibold leading-[1.15] tracking-tight text-slate-900 dark:text-white sm:text-4xl md:text-[2.6rem] lg:text-5xl"
                 >
                   {current.title}
                 </motion.h1>
@@ -215,7 +215,7 @@ const Banner = () => {
                     delay: 0.38,
                     duration: 0.45,
                   }}
-                  className="mt-4 max-w-md text-balance text-sm leading-6 text-slate-600 sm:text-base"
+                  className="mt-4 max-w-md text-balance text-sm leading-6 text-slate-600 dark:text-slate-300 sm:text-base"
                 >
                   {current.description}
                 </motion.p>
@@ -237,7 +237,7 @@ const Banner = () => {
                 >
                   <Link
                     href="/books"
-                    className="group inline-flex items-center gap-2 rounded-full bg-sky-700 px-6 py-3 text-sm font-semibold text-white shadow-md shadow-sky-900/15 transition-colors duration-300 hover:bg-slate-900 sm:px-7"
+                    className="group inline-flex items-center gap-2 rounded-full bg-sky-700 px-6 py-3 text-sm font-semibold text-white shadow-md shadow-sky-900/15 transition-colors duration-300 hover:bg-slate-900 dark:bg-sky-600 dark:hover:bg-sky-500 sm:px-7"
                   >
                     Shop the collection
 
@@ -258,7 +258,7 @@ const Banner = () => {
             type="button"
             onClick={prev}
             aria-label="Previous slide"
-            className="absolute left-3 top-1/2 z-20 hidden -translate-y-1/2 items-center justify-center rounded-full bg-white/80 p-2.5 text-slate-700 shadow-md ring-1 ring-sky-100 transition hover:bg-white hover:text-sky-700 lg:flex"
+            className="absolute left-3 top-1/2 z-20 hidden -translate-y-1/2 items-center justify-center rounded-full bg-white/80 p-2.5 text-slate-700 shadow-md ring-1 ring-sky-100 transition hover:bg-white hover:text-sky-700 dark:bg-slate-800/80 dark:text-slate-200 dark:ring-slate-700 dark:hover:bg-slate-700 dark:hover:text-sky-400 lg:flex"
           >
             <svg
               width="18"
@@ -279,7 +279,7 @@ const Banner = () => {
             type="button"
             onClick={next}
             aria-label="Next slide"
-            className="absolute right-3 top-1/2 z-20 hidden -translate-y-1/2 items-center justify-center rounded-full bg-white/80 p-2.5 text-slate-700 shadow-md ring-1 ring-sky-100 transition hover:bg-white hover:text-sky-700 lg:flex"
+            className="absolute right-3 top-1/2 z-20 hidden -translate-y-1/2 items-center justify-center rounded-full bg-white/80 p-2.5 text-slate-700 shadow-md ring-1 ring-sky-100 transition hover:bg-white hover:text-sky-700 dark:bg-slate-800/80 dark:text-slate-200 dark:ring-slate-700 dark:hover:bg-slate-700 dark:hover:text-sky-400 lg:flex"
           >
             <svg
               width="18"
@@ -301,37 +301,6 @@ const Banner = () => {
             role="tablist"
             aria-label="Slide navigation"
           >
-            {/* {slides.map((slide, index) => (
-              <button
-                key={slide.id}
-                type="button"
-                role="tab"
-                aria-selected={currentSlide === index}
-                aria-label={`Go to slide ${index + 1}`}
-                onClick={() => goTo(index)}
-                className="relative h-1.5 w-8 overflow-hidden rounded-full bg-slate-900/10 transition-colors sm:w-10"
-              >
-                {currentSlide === index && (
-                  <motion.span
-                    key={progressKey.current}
-                    initial={{
-                      scaleX: 0,
-                    }}
-                    animate={{
-                      scaleX: isPaused ? 0 : 1,
-                    }}
-                    transition={{
-                      duration: isPaused ? 0 : AUTOPLAY_MS / 1000,
-                      ease: "linear",
-                    }}
-                    style={{
-                      transformOrigin: "left",
-                    }}
-                    className="absolute inset-0 rounded-full bg-sky-600"
-                  />
-                )}
-              </button>
-            ))} */}
           </div>
         </div>
       </div>

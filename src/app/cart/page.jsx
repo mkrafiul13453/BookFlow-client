@@ -322,14 +322,14 @@ const CartPage = () => {
                             </div>
 
                             {/* Checkout */}
-
-                            <button
-                                type="button"
-                                className="mt-5 w-full rounded-lg bg-blue-600 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-700 sm:mt-6 sm:rounded-xl sm:py-3"
-                            >
-                                Proceed to Checkout
-                            </button>
-
+                                <form method="POST" action="/api/payment">
+                                    <button
+                                        type="submit"
+                                        className="mt-5 w-full rounded-lg bg-blue-600 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-700 sm:mt-6 sm:rounded-xl sm:py-3"
+                                    >
+                                        Proceed to Checkout
+                                    </button>
+                                </form>
                         </div>
 
                     </div>

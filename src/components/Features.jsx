@@ -42,23 +42,23 @@ const features = [
 
 const Features = () => {
     return (
-        <section className="bg-white py-12 sm:py-16 lg:py-20">
+        <section className="bg-white py-12 dark:bg-slate-950 sm:py-16 lg:py-20">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 
                 <div
                     className="
-                        grid
-                        grid-cols-2
-                        gap-x-4
-                        gap-y-10
+            grid
+            grid-cols-2
+            gap-x-4
+            gap-y-10
 
-                        sm:grid-cols-2
-                        sm:gap-x-8
-                        sm:gap-y-12
+            sm:grid-cols-2
+            sm:gap-x-8
+            sm:gap-y-12
 
-                        lg:grid-cols-4
-                        lg:gap-8
-                    "
+            lg:grid-cols-4
+            lg:gap-8
+          "
                 >
                     {features.map((feature, index) => {
                         const Icon = feature.icon;
@@ -87,12 +87,12 @@ const Features = () => {
                                     y: -6,
                                 }}
                                 className="
-                                    group
-                                    mx-auto
-                                    w-full
-                                    max-w-[180px]
-                                    text-center
-                                "
+                  group
+                  mx-auto
+                  w-full
+                  max-w-[180px]
+                  text-center
+                "
                             >
                                 {/* Icon */}
                                 <motion.div
@@ -106,57 +106,63 @@ const Features = () => {
                                         damping: 12,
                                     }}
                                     className="
-                                        mx-auto
-                                        flex
-                                        h-16
-                                        w-16
-                                        items-center
-                                        justify-center
-                                        rounded-2xl
+                    mx-auto
+                    flex
+                    h-16
+                    w-16
+                    items-center
+                    justify-center
+                    rounded-2xl
 
-                                        bg-sky-50
-                                        text-sky-500
+                    bg-sky-50
+                    text-sky-500
 
-                                        shadow-sm
+                    shadow-sm
 
-                                        transition-colors
-                                        duration-300
+                    transition-colors
+                    duration-300
 
-                                        group-hover:bg-sky-500
-                                        group-hover:text-white
+                    group-hover:bg-sky-500
+                    group-hover:text-white
 
-                                        sm:h-20
-                                        sm:w-20
+                    dark:bg-sky-950
+                    dark:text-sky-400
+                    dark:group-hover:bg-sky-500
+                    dark:group-hover:text-white
 
-                                        lg:h-24
-                                        lg:w-24
-                                    "
+                    sm:h-20
+                    sm:w-20
+
+                    lg:h-24
+                    lg:w-24
+                  "
                                 >
                                     <Icon
                                         className="
-                                            text-3xl
-                                            sm:text-4xl
-                                            lg:text-5xl
-                                        "
+                      text-3xl
+                      sm:text-4xl
+                      lg:text-5xl
+                    "
                                     />
                                 </motion.div>
 
                                 {/* Title */}
                                 <h3
                                     className="
-                                        mt-4
-                                        text-sm
-                                        font-bold
-                                        leading-5
-                                        tracking-tight
-                                        text-gray-900
+                    mt-4
+                    text-sm
+                    font-bold
+                    leading-5
+                    tracking-tight
+                    text-gray-900
+                    dark:text-white
 
-                                        sm:mt-5
-                                        sm:text-lg
+                    sm:mt-5
+                    sm:text-lg
 
-                                        lg:mt-6
-                                        lg:text-xl
-                                    "
+                    lg:mt-6
+                    lg:text-xl
+                  "
                                 >
                                     {feature.title}
                                 </h3>
@@ -164,21 +170,22 @@ const Features = () => {
                                 {/* Description */}
                                 <p
                                     className="
-                                        mx-auto
-                                        mt-2
-                                        max-w-[160px]
-                                        text-[11px]
-                                        leading-5
-                                        text-gray-500
+                    mx-auto
+                    mt-2
+                    max-w-[160px]
+                    text-[11px]
+                    leading-5
+                    text-gray-500
+                    dark:text-slate-400
 
-                                        sm:mt-3
-                                        sm:max-w-[230px]
-                                        sm:text-sm
-                                        sm:leading-6
+                    sm:mt-3
+                    sm:max-w-[230px]
+                    sm:text-sm
+                    sm:leading-6
 
-                                        lg:max-w-[270px]
-                                        lg:text-[15px]
-                                    "
+                    lg:max-w-[270px]
+                    lg:text-[15px]
+                  "
                                 >
                                     {feature.description}
                                 </p>
