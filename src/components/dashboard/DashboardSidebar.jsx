@@ -53,11 +53,11 @@ const DashboardSidebar = ({ role = "user" }) => {
         ],
 
         user: [
-            // {
-            //     name: "Overview",
-            //     href: "/dashboard/user",
-            //     icon: LayoutDashboard,
-            // },
+            {
+                name: "Overview",
+                href: "/dashboard/user",
+                icon: LayoutDashboard,
+            },
             {
                 name: "Delivery History",
                 href: "/dashboard/user/delivery-history",
@@ -87,11 +87,11 @@ const DashboardSidebar = ({ role = "user" }) => {
                 href: "/dashboard/admin",
                 icon: LayoutDashboard,
             },
-            {
-                name: "Book Approval Queue",
-                href: "/dashboard/admin/book-approval",
-                icon: ClipboardCheck,
-            },
+            // {
+            //     name: "Book Approval Queue",
+            //     href: "/dashboard/admin/book-approval",
+            //     icon: ClipboardCheck,
+            // },
             {
                 name: "Manage Users",
                 href: "/dashboard/admin/users",

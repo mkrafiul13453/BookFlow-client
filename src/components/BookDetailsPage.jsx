@@ -27,7 +27,7 @@ const BookDetailsPage = ({ book }) => {
         if (!session?.user) {
             toast.error("Please login to add to cart");
             redirect("/login");
-            return;
+            
         }
 
         try {
@@ -192,7 +192,7 @@ const BookDetailsPage = ({ book }) => {
 
                                 {/* Buy Now */}
                                 <button
-                                    // onClick={handleAddToCart}
+                                    onClick={handleAddToCart}
                                     type="button"
                                     className="flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 py-3.5 font-semibold text-white transition hover:bg-blue-700"
                                 >

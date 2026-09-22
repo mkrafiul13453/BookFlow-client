@@ -4,10 +4,26 @@ export const getAllOrder = async () => {
     const res = await fetch(`${baseUrl}/orders`, {
         method: "GET",
         headers: {
-
             "Content-Type": "application/json",
-        }
+        },
     });
+
+    const data = await res.json();
+    return data;
+};
+
+export const getOrdersByUser = async (userId) => {
+    const res = await fetch(
+        `${baseUrl}/orders?userId=${userId}`,
+        {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            cache: "no-store",
+        }
+    );
+
     const data = await res.json();
     return data;
 };
