@@ -139,7 +139,7 @@ export default function SignUpPage() {
               GOOGLE SIGN UP
           ========================================== */}
 
-          <Button
+          {/* <Button
             type="button"
             variant="secondary"
             className="h-11 w-full rounded-xl border border-slate-300 bg-white font-medium text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800"
@@ -160,7 +160,7 @@ export default function SignUpPage() {
                 ? "Connecting..."
                 : "Continue with Google"}
             </span>
-          </Button>
+          </Button> */}
 
           {/* =========================================
               DIVIDER

@@ -1,5 +1,4 @@
 "use client";
-
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -18,6 +17,7 @@ import {
   Mail,
   LogOut,
   LogIn,
+  NotebookPen,
 } from "lucide-react";
 
 import { MdDashboard } from "react-icons/md";
@@ -70,11 +70,11 @@ const Navbar = () => {
       href: "/about",
       icon: Info,
     },
-    {
-      name: "Contact",
-      href: "/contact",
-      icon: Mail,
-    },
+    // {
+    //   name: "Contact",
+    //   href: "/contact",
+    //   icon: Mail,
+    // },
   ];
 
   const closeMobileMenu = () => {
@@ -106,7 +106,8 @@ const Navbar = () => {
       <nav className="mx-auto flex h-[72px] w-full max-w-[1440px] items-center px-4 sm:px-6 lg:px-8 xl:px-10">
 
         {/* =================================================
-            LOGO
+            LOGO<NotebookPen />
+
         ================================================== */}
 
         <Link
@@ -117,7 +118,7 @@ const Navbar = () => {
           {/* Logo Icon */}
 
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-600 text-white shadow-sm transition-transform duration-200 hover:scale-105">
-            <BookOpen size={22} strokeWidth={2.5} />
+            <NotebookPen size={22} strokeWidth={2.5} />
           </div>
 
           {/* Logo Text */}

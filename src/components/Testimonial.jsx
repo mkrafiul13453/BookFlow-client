@@ -1,4 +1,3 @@
-
 "use client";
 
 import React, { useEffect, useState } from "react";
@@ -10,6 +9,7 @@ import {
   FaQuoteRight,
   FaComments,
 } from "react-icons/fa6";
+import { motion } from "framer-motion";
 
 const testimonials = [
   {
@@ -249,9 +249,6 @@ const Testimonial = () => {
   const goToDesktop = (index) => {
     setDesktopAnimating(true);
 
-    /*
-     * Move to the first card of the selected group.
-     */
     setDesktopIndex(3 + index * 3);
   };
 
@@ -268,59 +265,141 @@ const Testimonial = () => {
     <section className="relative overflow-hidden bg-gradient-to-br from-sky-50 via-white to-blue-50 px-4 py-16 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 sm:px-6 lg:px-8">
 
       {/* =========================================
-          BACKGROUND DECORATIONS
-      ========================================== */}
+                BACKGROUND DECORATIONS
+            ========================================== */}
 
-      <div className="pointer-events-none absolute -right-32 -top-32 h-80 w-80 rounded-full bg-blue-100/60 blur-3xl dark:bg-blue-950/40" />
+      <motion.div
+        initial={{ opacity: 0, scale: 0.8 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 1 }}
+        className="pointer-events-none absolute -right-32 -top-32 h-80 w-80 rounded-full bg-blue-100/60 blur-3xl dark:bg-blue-950/40"
+      />
 
-      <div className="pointer-events-none absolute -bottom-40 -left-32 h-96 w-96 rounded-full bg-sky-100/70 blur-3xl dark:bg-sky-950/40" />
+      <motion.div
+        initial={{ opacity: 0, scale: 0.8 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 1, delay: 0.15 }}
+        className="pointer-events-none absolute -bottom-40 -left-32 h-96 w-96 rounded-full bg-sky-100/70 blur-3xl dark:bg-sky-950/40"
+      />
 
       <div className="relative mx-auto max-w-7xl">
 
         {/* =========================================
-            HEADER
-        ========================================== */}
+                    HEADER
+                ========================================== */}
 
-        <div className="mb-12 flex flex-col gap-10 lg:flex-row lg:items-start lg:justify-between">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{
+            duration: 0.7,
+            ease: "easeOut",
+          }}
+          className="mb-12 flex flex-col gap-10 lg:flex-row lg:items-start lg:justify-between"
+        >
 
           {/* LEFT CONTENT */}
 
           <div className="max-w-2xl">
 
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-blue-100 px-4 py-2 text-sm font-semibold tracking-wide text-blue-600 dark:bg-blue-950 dark:text-blue-400">
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{
+                duration: 0.5,
+                delay: 0.1,
+              }}
+              className="mb-4 inline-flex items-center gap-2 rounded-full bg-blue-100 px-4 py-2 text-sm font-semibold tracking-wide text-blue-600 dark:bg-blue-950 dark:text-blue-400"
+            >
               <FaComments />
               TESTIMONIAL
-            </div>
+            </motion.div>
 
-            <h2 className="text-3xl font-bold leading-tight text-slate-900 dark:text-white sm:text-4xl lg:text-5xl">
+            <motion.h2
+              initial={{ opacity: 0, x: -25 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{
+                duration: 0.7,
+                delay: 0.15,
+                ease: "easeOut",
+              }}
+              className="text-3xl font-bold leading-tight text-slate-900 dark:text-white sm:text-4xl lg:text-5xl"
+            >
               Customer Experiences That{" "}
               <span className="text-blue-500 dark:text-blue-400">
                 Inspire Confidence
               </span>
-            </h2>
+            </motion.h2>
 
-            <div className="mt-6 h-1.5 w-16 rounded-full bg-blue-500" />
+            <motion.div
+              initial={{ width: 0, opacity: 0 }}
+              whileInView={{ width: 64, opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{
+                duration: 0.6,
+                delay: 0.4,
+                ease: "easeOut",
+              }}
+              className="mt-6 h-1.5 rounded-full bg-blue-500"
+            />
 
           </div>
 
           {/* RATING + BUTTONS */}
 
-          <div className="flex flex-col items-start gap-5 sm:flex-row sm:items-center lg:gap-10">
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{
+              duration: 0.7,
+              delay: 0.2,
+              ease: "easeOut",
+            }}
+            className="flex flex-col items-start gap-5 sm:flex-row sm:items-center lg:gap-10"
+          >
 
             {/* RATING */}
 
             <div>
 
-              <div className="text-4xl font-bold text-slate-900 dark:text-white">
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4 }}
+                className="text-4xl font-bold text-slate-900 dark:text-white"
+              >
                 4.7
-              </div>
+              </motion.div>
 
               <div className="mt-1 flex gap-1 text-lg text-blue-400">
-                <FaStar />
-                <FaStar />
-                <FaStar />
-                <FaStar />
-                <FaStar className="text-blue-100 dark:text-blue-950" />
+                {[1, 2, 3, 4, 5].map((star, index) => (
+                  <motion.span
+                    key={star}
+                    initial={{ opacity: 0, scale: 0.5 }}
+                    whileInView={{
+                      opacity: 1,
+                      scale: 1,
+                    }}
+                    viewport={{ once: true }}
+                    transition={{
+                      duration: 0.3,
+                      delay: 0.3 + index * 0.08,
+                    }}
+                  >
+                    {star <= 4 ? (
+                      <FaStar />
+                    ) : (
+                      <FaStar className="text-blue-100 dark:text-blue-950" />
+                    )}
+                  </motion.span>
+                ))}
               </div>
 
               <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
@@ -333,45 +412,53 @@ const Testimonial = () => {
 
             <div className="flex w-full flex-col gap-3 sm:w-48">
 
-              <button className="rounded-xl bg-blue-500 px-5 py-3 text-sm font-semibold text-white shadow-md shadow-blue-200 transition hover:bg-blue-600 dark:shadow-blue-950/40">
+              {/* <motion.button
+                whileHover={{ y: -2, scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                transition={{ duration: 0.2 }}
+                className="rounded-xl bg-blue-500 px-5 py-3 text-sm font-semibold text-white shadow-md shadow-blue-200 transition hover:bg-blue-600 dark:shadow-blue-950/40"
+              >
                 View all reviews
-              </button>
+              </motion.button>
 
-              <button className="rounded-xl border border-blue-300 bg-white px-5 py-3 text-sm font-semibold text-blue-600 transition hover:bg-blue-50 dark:border-blue-800 dark:bg-slate-900 dark:text-blue-400 dark:hover:bg-slate-800">
+              <motion.button
+                whileHover={{ y: -2, scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                transition={{ duration: 0.2 }}
+                className="rounded-xl border border-blue-300 bg-white px-5 py-3 text-sm font-semibold text-blue-600 transition hover:bg-blue-50 dark:border-blue-800 dark:bg-slate-900 dark:text-blue-400 dark:hover:bg-slate-800"
+              >
                 Write a review
-              </button>
+              </motion.button> */}
 
             </div>
 
-          </div>
+          </motion.div>
 
-        </div>
+        </motion.div>
 
         {/* =================================================
-            DESKTOP / LAPTOP CAROUSEL
-            3 CARDS
-        ================================================== */}
+                    DESKTOP / LAPTOP CAROUSEL
+                    3 CARDS
+                ================================================== */}
 
         <div className="hidden md:block">
 
           <div className="overflow-hidden">
 
             <div
-              className={`flex ${
-    desktopAnimating
-        ? "transition-transform duration-500 ease-in-out"
-        : ""
-} `}
+              className={`flex ${desktopAnimating
+                  ? "transition-transform duration-500 ease-in-out"
+                  : ""
+                }`}
               style={{
-                transform: `translateX(-${
-    desktopIndex * (100 / 3)
-                }%)`,
+                transform: `translateX(-${desktopIndex * (100 / 3)
+                  }%)`,
               }}
             >
 
               {desktopSlides.map((testimonial, index) => (
                 <div
-                  key={`desktop - ${ testimonial.name } -${ index } `}
+                  key={`desktop-${testimonial.name}-${index}`}
                   className="w-1/3 shrink-0 px-2 lg:px-3"
                 >
                   <TestimonialCard
@@ -386,17 +473,28 @@ const Testimonial = () => {
 
           {/* DESKTOP CONTROLS */}
 
-          <div className="mt-9 flex items-center justify-center gap-5">
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{
+              duration: 0.5,
+              delay: 0.3,
+            }}
+            className="mt-9 flex items-center justify-center gap-5"
+          >
 
             {/* PREVIOUS */}
 
-            <button
+            <motion.button
+              whileHover={{ scale: 1.08 }}
+              whileTap={{ scale: 0.92 }}
               onClick={prevDesktop}
               aria-label="Previous testimonials"
               className="flex h-11 w-11 items-center justify-center rounded-full border border-blue-200 bg-white text-blue-500 shadow-sm transition hover:bg-blue-50 hover:shadow-md dark:border-slate-700 dark:bg-slate-900 dark:text-blue-400 dark:hover:bg-slate-800"
             >
               <FaArrowLeft />
-            </button>
+            </motion.button>
 
             {/* DOTS */}
 
@@ -405,17 +503,17 @@ const Testimonial = () => {
               {Array.from({
                 length: Math.ceil(testimonials.length / 3),
               }).map((_, index) => (
-                <button
+                <motion.button
                   key={index}
+                  whileHover={{ scale: 1.15 }}
+                  whileTap={{ scale: 0.9 }}
                   onClick={() => goToDesktop(index)}
-                  aria-label={`Go to testimonial group ${
-    index + 1
-} `}
-                  className={`h - 2.5 rounded - full transition - all duration - 300 ${
-    desktopDot === index
-        ? "w-7 bg-blue-500"
-        : "w-2.5 bg-blue-200 dark:bg-blue-950"
-} `}
+                  aria-label={`Go to testimonial group ${index + 1
+                    }`}
+                  className={`h-2.5 rounded-full transition-all duration-300 ${desktopDot === index
+                      ? "w-7 bg-blue-500"
+                      : "w-2.5 bg-blue-200 dark:bg-blue-950"
+                    }`}
                 />
               ))}
 
@@ -423,43 +521,43 @@ const Testimonial = () => {
 
             {/* NEXT */}
 
-            <button
+            <motion.button
+              whileHover={{ scale: 1.08 }}
+              whileTap={{ scale: 0.92 }}
               onClick={nextDesktop}
               aria-label="Next testimonials"
               className="flex h-11 w-11 items-center justify-center rounded-full border border-blue-200 bg-white text-blue-500 shadow-sm transition hover:bg-blue-50 hover:shadow-md dark:border-slate-700 dark:bg-slate-900 dark:text-blue-400 dark:hover:bg-slate-800"
             >
               <FaArrowRight />
-            </button>
+            </motion.button>
 
-          </div>
+          </motion.div>
 
         </div>
 
         {/* =================================================
-            MOBILE CAROUSEL
-            1 CARD
-        ================================================== */}
+                    MOBILE CAROUSEL
+                    1 CARD
+                ================================================== */}
 
         <div className="md:hidden">
 
           <div className="overflow-hidden">
 
             <div
-              className={`flex ${
-    mobileAnimating
-        ? "transition-transform duration-500 ease-in-out"
-        : ""
-} `}
+              className={`flex ${mobileAnimating
+                  ? "transition-transform duration-500 ease-in-out"
+                  : ""
+                }`}
               style={{
-                transform: `translateX(-${
-    mobileIndex * 100
-                } %)`,
+                transform: `translateX(-${mobileIndex * 100
+                  }%)`,
               }}
             >
 
               {mobileSlides.map((testimonial, index) => (
                 <div
-                  key={`mobile - ${ testimonial.name } -${ index } `}
+                  key={`mobile-${testimonial.name}-${index}`}
                   className="w-full shrink-0"
                 >
                   <TestimonialCard
@@ -474,34 +572,45 @@ const Testimonial = () => {
 
           {/* MOBILE CONTROLS */}
 
-          <div className="mt-7 flex items-center justify-center gap-4">
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{
+              duration: 0.5,
+              delay: 0.3,
+            }}
+            className="mt-7 flex items-center justify-center gap-4"
+          >
 
             {/* PREVIOUS */}
 
-            <button
+            <motion.button
+              whileHover={{ scale: 1.08 }}
+              whileTap={{ scale: 0.92 }}
               onClick={prevMobile}
               aria-label="Previous testimonial"
               className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-blue-200 bg-white text-blue-500 shadow-sm transition hover:bg-blue-50 hover:shadow-md dark:border-slate-700 dark:bg-slate-900 dark:text-blue-400 dark:hover:bg-slate-800"
             >
               <FaArrowLeft />
-            </button>
+            </motion.button>
 
             {/* DOTS */}
 
             <div className="flex max-w-[180px] items-center gap-1.5 overflow-hidden">
 
               {testimonials.map((_, index) => (
-                <button
+                <motion.button
                   key={index}
+                  whileHover={{ scale: 1.15 }}
+                  whileTap={{ scale: 0.9 }}
                   onClick={() => goToMobile(index)}
-                  aria-label={`Go to testimonial ${
-    index + 1
-} `}
-                  className={`h - 2.5 shrink - 0 rounded - full transition - all duration - 300 ${
-    mobileDot === index
-        ? "w-7 bg-blue-500"
-        : "w-2.5 bg-blue-200 dark:bg-blue-950"
-} `}
+                  aria-label={`Go to testimonial ${index + 1
+                    }`}
+                  className={`h-2.5 shrink-0 rounded-full transition-all duration-300 ${mobileDot === index
+                      ? "w-7 bg-blue-500"
+                      : "w-2.5 bg-blue-200 dark:bg-blue-950"
+                    }`}
                 />
               ))}
 
@@ -509,15 +618,17 @@ const Testimonial = () => {
 
             {/* NEXT */}
 
-            <button
+            <motion.button
+              whileHover={{ scale: 1.08 }}
+              whileTap={{ scale: 0.92 }}
               onClick={nextMobile}
               aria-label="Next testimonial"
               className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-blue-200 bg-white text-blue-500 shadow-sm transition hover:bg-blue-50 hover:shadow-md dark:border-slate-700 dark:bg-slate-900 dark:text-blue-400 dark:hover:bg-slate-800"
             >
               <FaArrowRight />
-            </button>
+            </motion.button>
 
-          </div>
+          </motion.div>
 
         </div>
 
@@ -532,11 +643,38 @@ const Testimonial = () => {
 
 const TestimonialCard = ({ testimonial }) => {
   return (
-    <div className="group relative flex min-h-[330px] flex-col justify-between overflow-hidden rounded-2xl border border-blue-100 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-blue-100/50 dark:border-slate-700 dark:bg-slate-900 dark:hover:shadow-slate-950/50 sm:p-7">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.15 }}
+      transition={{
+        duration: 0.55,
+        ease: "easeOut",
+      }}
+      whileHover={{
+        y: -4,
+        transition: {
+          duration: 0.25,
+          ease: "easeOut",
+        },
+      }}
+      className="group relative flex min-h-[330px] flex-col justify-between overflow-hidden rounded-2xl border border-blue-100 bg-white p-6 shadow-sm transition duration-300 hover:shadow-xl hover:shadow-blue-100/50 dark:border-slate-700 dark:bg-slate-900 dark:hover:shadow-slate-950/50 sm:p-7"
+    >
 
       {/* QUOTE ICON */}
 
-      <FaQuoteRight className="absolute right-6 top-6 text-3xl text-blue-100 dark:text-blue-950" />
+      <motion.div
+        animate={{
+          y: [0, -3, 0],
+        }}
+        transition={{
+          duration: 4,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      >
+        <FaQuoteRight className="absolute right-6 top-6 text-3xl text-blue-100 dark:text-blue-950" />
+      </motion.div>
 
       <div>
 
@@ -544,17 +682,45 @@ const TestimonialCard = ({ testimonial }) => {
 
         <div className="mb-5 flex gap-1 text-base">
 
-          {[1, 2, 3, 4, 5].map((star) =>
+          {[1, 2, 3, 4, 5].map((star, index) =>
             star <= testimonial.rating ? (
-              <FaStar
+              <motion.span
                 key={star}
-                className="text-blue-500"
-              />
+                initial={{
+                  opacity: 0,
+                  scale: 0.5,
+                }}
+                whileInView={{
+                  opacity: 1,
+                  scale: 1,
+                }}
+                viewport={{ once: true }}
+                transition={{
+                  duration: 0.25,
+                  delay: index * 0.05,
+                }}
+              >
+                <FaStar className="text-blue-500" />
+              </motion.span>
             ) : (
-              <FaRegStar
+              <motion.span
                 key={star}
-                className="text-blue-200 dark:text-blue-950"
-              />
+                initial={{
+                  opacity: 0,
+                  scale: 0.5,
+                }}
+                whileInView={{
+                  opacity: 1,
+                  scale: 1,
+                }}
+                viewport={{ once: true }}
+                transition={{
+                  duration: 0.25,
+                  delay: index * 0.05,
+                }}
+              >
+                <FaRegStar className="text-blue-200 dark:text-blue-950" />
+              </motion.span>
             )
           )}
 
@@ -574,15 +740,19 @@ const TestimonialCard = ({ testimonial }) => {
 
         {/* AVATAR */}
 
-        <div className="h-14 w-14 shrink-0 overflow-hidden rounded-full border-4 border-blue-50 ring-1 ring-blue-100 dark:border-slate-800 dark:ring-slate-700">
-
+        <motion.div
+          whileHover={{
+            scale: 1.06,
+          }}
+          transition={{ duration: 0.25 }}
+          className="h-14 w-14 shrink-0 overflow-hidden rounded-full border-4 border-blue-50 ring-1 ring-blue-100 dark:border-slate-800 dark:ring-slate-700"
+        >
           <img
             src={testimonial.image}
             alt={testimonial.name}
             className="h-full w-full object-cover"
           />
-
-        </div>
+        </motion.div>
 
         {/* USER INFO */}
 
@@ -600,7 +770,7 @@ const TestimonialCard = ({ testimonial }) => {
 
       </div>
 
-    </div>
+    </motion.div>
   );
 };
 

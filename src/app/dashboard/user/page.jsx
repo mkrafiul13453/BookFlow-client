@@ -13,7 +13,7 @@ const userDashboardHomePage = async () => {
 
     if (!user) {
         return (
-            <div>
+            <div className="text-gray-900 dark:text-white">
                 Please login first.
             </div>
         );
@@ -96,46 +96,42 @@ const userDashboardHomePage = async () => {
 
     return (
         <div className="p-4 md:p-6">
-
             {/* Page Heading */}
             <div className="mb-6">
-                <h1 className="text-2xl md:text-3xl font-bold">
+                <h1 className="text-2xl font-bold text-gray-900 dark:text-white md:text-3xl">
                     Dashboard Overview
                 </h1>
 
-                <p className="mt-1 text-sm text-gray-500">
+                <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
                     Welcome back, {user.name}
                 </p>
             </div>
 
             {/* Total Cost Card */}
             <div className="mb-6">
-                <div className="rounded-2xl bg-white p-6 shadow-sm border border-gray-100">
-
-                    <p className="text-sm font-medium text-gray-500">
+                <div className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900">
+                    <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
                         Total Overall Cost
                     </p>
 
-                    <h2 className="mt-2 text-3xl font-bold text-gray-900">
+                    <h2 className="mt-2 text-3xl font-bold text-gray-900 dark:text-white">
                         ${totalOverallCost.toFixed(2)}
                     </h2>
 
-                    <p className="mt-2 text-sm text-gray-500">
+                    <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
                         Total amount spent on delivered orders
                     </p>
-
                 </div>
             </div>
 
             {/* Category Pie Chart */}
-            <div className="rounded-2xl bg-white p-5 md:p-6 shadow-sm border border-gray-100">
-
+            <div className="rounded-2xl border border-gray-100 bg-white p-5 shadow-sm dark:border-gray-800 dark:bg-gray-900 md:p-6">
                 <div className="mb-4">
-                    <h2 className="text-xl font-semibold">
+                    <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
                         Delivered Books by Category
                     </h2>
 
-                    <p className="text-sm text-gray-500 mt-1">
+                    <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
                         Categories of books from your delivered orders
                     </p>
                 </div>
@@ -143,11 +139,10 @@ const userDashboardHomePage = async () => {
                 {finalCategoryData.length > 0 ? (
                     <UserCategoryPieChart data={finalCategoryData} />
                 ) : (
-                    <div className="flex h-[300px] items-center justify-center text-gray-500">
+                    <div className="flex h-[300px] items-center justify-center text-gray-500 dark:text-gray-400">
                         No delivered books found.
                     </div>
                 )}
-
             </div>
         </div>
     );

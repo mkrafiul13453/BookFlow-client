@@ -15,6 +15,7 @@ import {
     FaCheckCircle,
 } from "react-icons/fa";
 import { toast } from "react-toastify";
+import ReviewSection from "./user/ReviewSection";
 
 const BookDetailsPage = ({ book }) => {
     const { data: session } = authClient.useSession();
@@ -215,7 +216,11 @@ const BookDetailsPage = ({ book }) => {
                         </div>
                     </div>
                 </div>
+                <div>
+                    <ReviewSection bookId={book._id} />
+                </div>
             </div>
+            
         </main>
     );
 };

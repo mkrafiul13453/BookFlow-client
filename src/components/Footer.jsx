@@ -198,13 +198,14 @@ export default function Footer() {
         </div>
 
         {/* Bottom Footer */}
-        <div className="flex flex-col items-center justify-between gap-3 border-t py-6 text-center text-sm text-muted-foreground md:flex-row">
+        <div className="flex flex-col items-center justify-between gap-4 border-t py-6 text-center text-sm text-muted-foreground md:flex-row">
 
           <p>
             © {new Date().getFullYear()} BookFlow. All rights reserved.
           </p>
 
-          <div className="flex items-center gap-5">
+          {/* Footer Links */}
+          <div className="grid w-full grid-cols-2 gap-x-8 gap-y-2 sm:flex sm:w-auto sm:items-center sm:gap-5">
 
             <Link
               href="/about"
@@ -228,6 +229,7 @@ export default function Footer() {
             </Link>
 
           </div>
+
         </div>
 
       </div>

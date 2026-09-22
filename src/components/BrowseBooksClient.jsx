@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import BookCard from "@/components/BookCard";
 
 const categories = [
@@ -14,10 +14,15 @@ const categories = [
     "Children",
 ];
 
+const BOOKS_PER_PAGE = 20;
+
 const BrowseBooksClient = ({ books = [] }) => {
     const [search, setSearch] = useState("");
     const [category, setCategory] = useState("All Categories");
     const [priceSort, setPriceSort] = useState("");
+
+    // Pagination state
+    const [currentPage, setCurrentPage] = useState(1);
 
     const filteredBooks = useMemo(() => {
         let result = [...books];
@@ -54,10 +59,35 @@ const BrowseBooksClient = ({ books = [] }) => {
         return result;
     }, [books, search, category, priceSort]);
 
+    // Total number of pages
+    const totalPages = Math.ceil(
+        filteredBooks.length / BOOKS_PER_PAGE
+    );
+
+    // Books for current page
+    const paginatedBooks = useMemo(() => {
+        const startIndex = (currentPage - 1) * BOOKS_PER_PAGE;
+        const endIndex = startIndex + BOOKS_PER_PAGE;
+
+        return filteredBooks.slice(startIndex, endIndex);
+    }, [filteredBooks, currentPage]);
+
+    // Generate page numbers
+    const pageNumbers = Array.from(
+        { length: totalPages },
+        (_, index) => index + 1
+    );
+
+    // Search / category / sorting change হলে page 1 এ যাবে
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [search, category, priceSort]);
+
     const clearFilters = () => {
         setSearch("");
         setCategory("All Categories");
         setPriceSort("");
+        setCurrentPage(1);
     };
 
     return (
@@ -172,14 +202,65 @@ const BrowseBooksClient = ({ books = [] }) => {
 
             {/* Books Grid */}
             {filteredBooks.length > 0 ? (
-                <div className="mx-auto grid max-w-7xl grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-5">
-                    {filteredBooks.map((book) => (
-                        <BookCard
-                            key={book._id}
-                            book={book}
-                        />
-                    ))}
-                </div>
+                <>
+                    <div className="mx-auto grid max-w-7xl grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-5">
+                        {paginatedBooks.map((book) => (
+                            <BookCard
+                                key={book._id}
+                                book={book}
+                            />
+                        ))}
+                    </div>
+
+                    {/* Pagination */}
+                    {totalPages > 1 && (
+                        <div className="mx-auto mt-10 flex max-w-7xl items-center justify-center gap-2">
+
+                            {/* Previous Button */}
+                            <button
+                                type="button"
+                                onClick={() =>
+                                    setCurrentPage((prev) =>
+                                        Math.max(prev - 1, 1)
+                                    )
+                                }
+                                disabled={currentPage === 1}
+                                className="rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-40 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 dark:hover:bg-gray-800"
+                            >
+                                Previous
+                            </button>
+
+                            {/* Page Numbers */}
+                            {pageNumbers.map((page) => (
+                                <button
+                                    key={page}
+                                    type="button"
+                                    onClick={() => setCurrentPage(page)}
+                                    className={`min-w-10 rounded-lg px-3 py-2 text-sm font-semibold transition ${currentPage === page
+                                            ? "bg-gray-900 text-white dark:bg-white dark:text-gray-900"
+                                            : "border border-gray-300 bg-white text-gray-700 hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 dark:hover:bg-gray-800"
+                                        }`}
+                                >
+                                    {page}
+                                </button>
+                            ))}
+
+                            {/* Next Button */}
+                            <button
+                                type="button"
+                                onClick={() =>
+                                    setCurrentPage((prev) =>
+                                        Math.min(prev + 1, totalPages)
+                                    )
+                                }
+                                disabled={currentPage === totalPages}
+                                className="rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-40 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 dark:hover:bg-gray-800"
+                            >
+                                Next
+                            </button>
+                        </div>
+                    )}
+                </>
             ) : (
                 /* No Result */
                 <div className="mx-auto max-w-7xl rounded-2xl border border-dashed border-gray-300 bg-white px-6 py-16 text-center dark:border-gray-700 dark:bg-gray-900">
