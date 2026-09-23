@@ -6,6 +6,7 @@ import {
   BookOpen,
   Loader2,
   ArrowRight,
+  NotebookPen,
 } from "lucide-react";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -85,7 +86,7 @@ export default function SignUpPage() {
           <div
             className="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-600 text-white shadow-md"
           >
-            <BookOpen
+            <NotebookPen
               size={24}
               strokeWidth={2.5}
             />

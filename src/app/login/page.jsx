@@ -13,7 +13,7 @@ import {
   Surface,
   TextField,
 } from "@heroui/react";
-import { BookOpen, Loader2, ArrowRight } from "lucide-react";
+import { BookOpen, Loader2, ArrowRight, NotebookPen } from "lucide-react";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 
@@ -68,7 +68,7 @@ export default function LoginPage() {
           className="mb-7 flex items-center gap-2.5 transition-opacity hover:opacity-80"
         >
           <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-600 text-white shadow-md">
-            <BookOpen size={24} strokeWidth={2.5} />
+            <NotebookPen size={24} strokeWidth={2.5} />
           </div>
 
           <span className="text-2xl font-bold tracking-tight">

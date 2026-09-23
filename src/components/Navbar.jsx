@@ -101,8 +101,7 @@ const Navbar = () => {
   const role = user?.role || "user";
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-slate-200 bg-white/95 backdrop-blur-md dark:border-slate-800 dark:bg-slate-950/95">
-
+    <header className="relative sticky top-0 z-50 w-full border-b border-slate-200 bg-white/95 backdrop-blur-md dark:border-slate-800 dark:bg-slate-950/95">
       <nav className="mx-auto flex h-[72px] w-full max-w-[1440px] items-center px-4 sm:px-6 lg:px-8 xl:px-10">
 
         {/* =================================================
@@ -361,101 +360,104 @@ const Navbar = () => {
       </nav>
 
       {/* =================================================
-          MOBILE MENU
-      ================================================== */}
+    MOBILE MENU
+    Floating dropdown from top-right
+================================================= */}
 
-      {mobileMenuOpen && (
-        <div className="border-t border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-950 xl:hidden">
+      <div
+        className={`absolute right-3 top-[68px] z-[60] w-[260px] origin-top-right transition-all duration-300 ease-out sm:right-6 sm:w-[290px] lg:right-8 xl:hidden ${mobileMenuOpen
+            ? "pointer-events-auto translate-y-0 scale-100 opacity-100"
+            : "pointer-events-none -translate-y-2 scale-95 opacity-0"
+          }`}
+      >
+        <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white/95 shadow-2xl shadow-slate-900/10 backdrop-blur-xl dark:border-slate-700 dark:bg-slate-950/95 dark:shadow-black/30">
 
-          <div className="mx-auto w-full max-w-[1440px] px-4 py-4 sm:px-6 lg:px-8">
+          {/* Navigation Links */}
+          <div className="p-2">
+            {navLinks.map((link) => {
+              const Icon = link.icon;
 
-            {/* Navigation Links */}
-
-            <div className="space-y-1">
-
-              {navLinks.map((link) => {
-                const Icon = link.icon;
-
-                return (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    onClick={closeMobileMenu}
-                    className={`flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition`}
-                  >
-                    <Icon size={18} />
-
-                    <span>
-                      {link.name}
-                    </span>
-                  </Link>
-                );
-              })}
-
-            </div>
-
-            {/* Mobile Login / Logout */}
-
-            <div className="mt-3 border-t border-slate-200 pt-3 dark:border-slate-800">
-
-              {user ? (
-                <div className="flex flex-col gap-2">
-
-                  {/* Mobile Dashboard */}
-
-                  <Link
-                    href={`/dashboard/${role}`}
-                    onClick={closeMobileMenu}
-                    className="flex w-full items-center gap-2 rounded-xl px-4 py-3 text-sm font-medium transition hover:bg-slate-100 dark:hover:bg-slate-800"
-                  >
-                    <MdDashboard size={18} />
-
-                    Dashboard
-                  </Link>
-
-                  {/* Mobile Profile */}
-
-                  <Link
-                    href="/profile"
-                    onClick={closeMobileMenu}
-                    className="flex w-full items-center gap-2 rounded-xl px-4 py-3 text-sm font-medium transition hover:bg-slate-100 dark:hover:bg-slate-800"
-                  >
-                    <CgProfile size={18} />
-
-                    Profile
-                  </Link>
-
-                  {/* Mobile Logout */}
-
-                  <button
-                    type="button"
-                    onClick={handleSignOut}
-                    className="flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-3 text-sm font-semibold text-white transition hover:bg-blue-700"
-                  >
-                    <LogOut size={17} />
-
-                    Logout
-                  </button>
-
-                </div>
-              ) : (
+              return (
                 <Link
-                  href="/login"
+                  key={link.href}
+                  href={link.href}
                   onClick={closeMobileMenu}
-                  className="flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-3 text-sm font-semibold text-white transition hover:bg-blue-700"
+                  className="flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-medium text-slate-700 transition-all duration-200 hover:bg-blue-50 hover:text-blue-600 dark:text-slate-200 dark:hover:bg-slate-800 dark:hover:text-blue-400"
                 >
-                  <LogIn size={17} />
+                  <Icon
+                    size={17}
+                    className="shrink-0"
+                  />
 
-                  Login
+                  <span>{link.name}</span>
                 </Link>
-              )}
+              );
+            })}
+          </div>
 
-            </div>
+          {/* Divider */}
+          <div className="mx-3 border-t border-slate-200 dark:border-slate-800" />
 
+          {/* Mobile Login / Logout */}
+          <div className="p-2">
+            {user ? (
+              <div className="space-y-1">
+
+                {/* Dashboard */}
+                <Link
+                  href={`/dashboard/${role}`}
+                  onClick={closeMobileMenu}
+                  className="flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-medium text-slate-700 transition-all duration-200 hover:bg-slate-100 hover:text-blue-600 dark:text-slate-200 dark:hover:bg-slate-800 dark:hover:text-blue-400"
+                >
+                  <MdDashboard
+                    size={17}
+                    className="shrink-0"
+                  />
+
+                  <span>Dashboard</span>
+                </Link>
+
+                {/* Profile */}
+                <Link
+                  href="/profile"
+                  onClick={closeMobileMenu}
+                  className="flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-medium text-slate-700 transition-all duration-200 hover:bg-slate-100 hover:text-blue-600 dark:text-slate-200 dark:hover:bg-slate-800 dark:hover:text-blue-400"
+                >
+                  <CgProfile
+                    size={17}
+                    className="shrink-0"
+                  />
+
+                  <span>Profile</span>
+                </Link>
+
+                {/* Logout */}
+                <button
+                  type="button"
+                  onClick={handleSignOut}
+                  className="mt-1 flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:bg-blue-700 hover:shadow-md"
+                >
+                  <LogOut size={16} />
+
+                  <span>Logout</span>
+                </button>
+
+              </div>
+            ) : (
+              <Link
+                href="/login"
+                onClick={closeMobileMenu}
+                className="flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:bg-blue-700 hover:shadow-md"
+              >
+                <LogIn size={16} />
+
+                <span>Login</span>
+              </Link>
+            )}
           </div>
 
         </div>
-      )}
+      </div>
 
     </header>
   );
